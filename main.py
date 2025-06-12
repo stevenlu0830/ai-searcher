@@ -21,6 +21,21 @@ llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
 # parses it into the ResearchResponse model
 parser = PydanticOutputParser(pydantic_object=ResearchResponse)
 
-
+# Create a chat prompt template that includes the system message, user query, 
+prompt = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system", 
+            """
+            You are a helpful research assistant that will help generate a research report.
+            Answer the user query and use necessary tools.
+            Wrap the output in this format and provide no other text \n{format_instructions}
+            """,
+        ),
+        ("placeholder", "{chat_history}"),
+        ("human", "{query}"),
+        ("placeholder", "{agent_scratchpad}"),
+    ]
+).partial(format_instructions=parser.get_format_instructions())
 
 
