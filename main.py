@@ -6,4 +6,4 @@ from langchain_anthropic import ChatAnthropic
 load dotenv()
 
 # llm = ChatOpenAI(model="gpt-4o", temperature=0.7)
-llm = ChatAnthropic(model="claude-2", temperature=0.7)
+llm = ChatAnthropic(model="claude-3-5-sonnet-20241022")
