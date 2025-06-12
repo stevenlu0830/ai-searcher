@@ -4,6 +4,7 @@ from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
+from langchain.agents import create_tool_calling_agent, AgentExecutor
 
 load_dotenv()
 
@@ -38,4 +39,15 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 ).partial(format_instructions=parser.get_format_instructions())
 
+# Create the agent that will use the LLM and the prompt template
+agent = create_tool_calling_agent(
+    llm=llm,
+    prompt=prompt,
+    tools=[]
+)
 
+# Create an AgentExecutor that will run the agent with the provided tools
+agent_executor = AgentExecutor(agent=agent, tools=[], verbose=True)
+
+raw_response = agent_executor.invoke({"query": "What is the impact of climate change on polar bear populations?"})
+print(raw_response)
