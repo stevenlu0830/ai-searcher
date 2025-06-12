@@ -1,0 +1,9 @@
+from dotenv import load_dotenv
+from pydantic import BaseModel
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+
+load dotenv()
+
+# llm = ChatOpenAI(model="gpt-4o", temperature=0.7)
+llm = ChatAnthropic(model="claude-2", temperature=0.7)
